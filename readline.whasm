@@ -1,0 +1,46 @@
+jumps       test
+
+marks       readline  // reads a line of text and stores it in the heap 
+                      // (address taken from the top of the stack)
+duplicate   // store the address
+
+marks       readlineloop
+duplicate
+readchar
+
+duplicate           // check if end of line
+retrieve
+push        0x0A    // newline
+sub
+branchzs    endreadline
+
+push        0b01       // increment address by one
+add
+jumps       readlineloop
+
+marks       endreadline
+discard
+return
+
+
+marks       test
+
+push        0x0A
+calls       readline
+
+marks       loop
+
+duplicate
+retrieve
+duplicate
+printchar
+push        0x0A
+sub
+branchzs    end
+
+push        1
+add
+jumps       loop
+
+marks       end
+end
