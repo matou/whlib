@@ -1,0 +1,82 @@
+// Copyright (c) 2011 Matthias Matousek <matou@taunusstein.net>
+// 
+// Permission to use, copy, modify, and distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+jumps test
+
+// get the length of the string at the position specified by top of stack
+// write the length to the top of the stack
+// strings are terminated with newline
+marks       strlen
+
+push        0   // a counter
+
+marks       strlenloop
+
+swap
+
+duplicate
+retrieve
+
+push        0x0A // newline
+sub
+branchzs    endstrlen
+
+push        1
+add
+
+swap
+push        1
+add
+
+jumps       strlenloop
+
+marks       endstrlen
+discard
+return
+
+
+
+marks       test
+
+push        42
+
+push        10
+pushchar    x
+store
+push        11
+pushchar    x
+store
+push        12
+pushchar    x
+store
+push        13
+pushchar    x
+store
+push        14
+push        0x0A 
+store
+
+push        10
+calls       strlen
+
+println     should be 4:
+printnum
+
+println
+println     should be 42:
+printnum
+println
+
+end
+
