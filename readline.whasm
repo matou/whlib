@@ -33,7 +33,8 @@ add
 jumps       readlineloop
 
 marks       endreadline
-discard
+push        0
+store
 return
 
 
